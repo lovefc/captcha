@@ -2,11 +2,15 @@
 
 使用简单方便，增加你的摸鱼时间。
 
+自动判断中英文，中文时为中文随机数，英文时为英文随机数
+
 ![avatar](/image/1.gif) 
 
 ![avatar](/image/2.gif)
 
 ![avatar](/image/3.gif)
+
+![avatar](/image/4.gif)
 
 验证码字体是开源的站酷库黑体(中英文皆可用)，感谢站酷免费提供。
 

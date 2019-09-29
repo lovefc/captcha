@@ -9,6 +9,7 @@
 
 
 /* 加载文件，如果使用composer的加载就不需要手动加载 */
+/** require __DIR__ . '/vendor/autoload.php'; **/
 require __DIR__ . '/Src/Captcha.php';
 require __DIR__ . '/Src/GIF/GIFEncoder.php';
 
