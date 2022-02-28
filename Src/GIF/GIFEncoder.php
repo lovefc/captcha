@@ -28,17 +28,17 @@ class GIFEncoder
     public $IMG = -1;
 
     public $ERR = array(
-    'ERR00' => "Does not supported public function for only one image!",
-    'ERR01' => "Source is not a GIF image!",
-    'ERR02' => "Unintelligible flag ",
-    'ERR03' => "Could not make animation from animated GIF source",
-  );
+        'ERR00' => "Does not supported public function for only one image!",
+        'ERR01' => "Source is not a GIF image!",
+        'ERR02' => "Unintelligible flag ",
+        'ERR03' => "Could not make animation from animated GIF source",
+    );
 
     public function __construct($GIF_src, $GIF_dly = 100, $GIF_lop = 0, $GIF_dis = 0, $GIF_red = 0, $GIF_grn = 0, $GIF_blu = 0, $GIF_mod = 'bin')
     {
         if (!is_array($GIF_src) && !is_array($GIF_tim)) {
             printf("%s: %s", $this->VER, $this->ERR['ERR00']);
-            exit(0);
+            return;
         }
         $this->LOP = ($GIF_lop > -1) ? $GIF_lop : 0;
         $this->DIS = ($GIF_dis > -1) ? (($GIF_dis < 3) ? $GIF_dis : 3) : 2;
@@ -51,29 +51,29 @@ class GIFEncoder
                 $this->BUF[] = $GIF_src[$i];
             } else {
                 printf("%s: %s(%s)!", $this->VER, $this->ERR['ERR02'], $GIF_mod);
-                exit(0);
+                return;
             }
             if (substr($this->BUF[$i], 0, 6) != "GIF87a" && substr($this->BUF[$i], 0, 6) != "GIF89a") {
                 printf("%s: %d %s", $this->VER, $i, $this->ERR['ERR01']);
-                exit(0);
+                return;
             }
             for ($j = (13 + 3 * (2 << (ord($this->BUF[$i][10]) & 0x07))), $k = true; $k; $j++) {
                 switch ($this->BUF[$i][$j]) {
-          case "!":
-            if ((substr($this->BUF[$i], ($j + 3), 8)) == "NETSCAPE") {
-                printf("%s: %s(%s source)!", $this->VER, $this->ERR['ERR03'], ($i + 1));
-                exit(0);
-            }
-            break;
-          case ";":
-            $k = false;
-            break;
-        }
+                    case "!":
+                        if ((substr($this->BUF[$i], ($j + 3), 8)) == "NETSCAPE") {
+                            printf("%s: %s(%s source)!", $this->VER, $this->ERR['ERR03'], ($i + 1));
+                            return;
+                        }
+                        break;
+                    case ";":
+                        $k = false;
+                        break;
+                }
             }
         }
         GIFEncoder::GIFAddHeader();
         for ($i = 0, $count_buf = count($this->BUF); $i < $count_buf; $i++) {
-            GIFEncoder::GIFAddFrames($i, $GIF_dly[$i]);
+            GIFEncoder::GIFAddFrames($i, $i);
         }
         GIFEncoder::GIFAddFooter();
     }
@@ -81,10 +81,8 @@ class GIFEncoder
     public function GIFAddHeader()
     {
         $cmap = 0;
-        if (ord($this->BUF[0][
-      10]) & 0x80) {
-            $cmap = 3 * (2 << (ord($this->BUF[0][
-        10]) & 0x07));
+        if (ord($this->BUF[0][10]) & 0x80) {
+            $cmap = 3 * (2 << (ord($this->BUF[0][10]) & 0x07));
             $this->GIF .= substr($this->BUF[0], 6, 7);
             $this->GIF .= substr($this->BUF[0], 13, $cmap);
             $this->GIF .= "!\377\13NETSCAPE2.0\3\1" . GIFEncoder::GIFWord($this->LOP) . "\0";
@@ -110,15 +108,15 @@ class GIFEncoder
             }
         }
         switch ($Locals_tmp[0]) {
-      case "!":
-        $Locals_img = substr($Locals_tmp, 8, 10);
-        $Locals_tmp = substr($Locals_tmp, 18, strlen($Locals_tmp) - 18);
-        break;
-      case ",":
-        $Locals_img = substr($Locals_tmp, 0, 10);
-        $Locals_tmp = substr($Locals_tmp, 10, strlen($Locals_tmp) - 10);
-        break;
-    }
+            case "!":
+                $Locals_img = substr($Locals_tmp, 8, 10);
+                $Locals_tmp = substr($Locals_tmp, 18, strlen($Locals_tmp) - 18);
+                break;
+            case ",":
+                $Locals_img = substr($Locals_tmp, 0, 10);
+                $Locals_tmp = substr($Locals_tmp, 10, strlen($Locals_tmp) - 10);
+                break;
+        }
         if (ord($this->BUF[$i][10]) & 0x80 && $this->IMG > -1) {
             if ($Global_len == $Locals_len) {
                 if (GIFEncoder::GIFBlockCompare($Global_rgb, $Locals_rgb, $Global_len)) {

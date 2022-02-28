@@ -53,12 +53,6 @@ class Captcha
 
     /**
      * 生成验证码
-     *
-     * @param integer $w 宽度
-     * @param integer $h 高度
-     * @param integer $nums 数量
-     * @param string $random 随机字符串
-     * @return void
      */
     public function doImg($code = '')
     {
@@ -78,8 +72,30 @@ class Captcha
         $gif = new GIFEncoder($imagedata);
         header('Content-type:image/gif');
         echo $gif->GetAnimation();
-        exit;
+        exit();
     }
+	
+    /**
+     * 获取图片内容
+     */
+    public function getImgContent($code = '')
+    {
+        if (!$code) {
+            return false;
+        }
+        $code = strtoupper($code);
+        $imagedata = [];
+        if ($this->is_gif) {
+            for ($i = 0; $i < $this->gif_fps; $i++) {
+                $imagedata[] = $this->creBackGIF($code);
+                ++$i;
+            }
+        } else {
+            $imagedata[] = $this->creBackGIF($code);
+        }
+        $gif = new GIFEncoder($imagedata);
+        return $gif->GetAnimation();
+    }	
 
     /**
      * 创建动态背景
