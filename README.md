@@ -14,8 +14,6 @@
 
 验证码字体是开源的站酷库黑体(中英文皆可用)，感谢站酷免费提供。
 
-演示地址: https://api.lovefc.cn/captcha
-
 ### 安装
 
 直接下载源码或者使用 composer 安装
@@ -23,7 +21,7 @@
 ````
 {
     "require": {
-        "lovefc/captcha": "0.0.1"
+        "lovefc/captcha": "0.0.2"
     }		
 }
 ````
