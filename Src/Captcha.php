@@ -4,14 +4,13 @@ namespace FC;
 
 use FC\GIF\GIFEncoder;
 
-
 /*
  * 验证码类库
- * @Author: lovefc 
- * @Email：fcphp@qq.com 
- * @Date: 2019-09-27 14:35:05 
+ * @Author: lovefc
+ * @Email：fcphp@qq.com
+ * @Date: 2019-09-27 14:35:05
  * @Last Modified by: lovefc
- * @Last Modified time: 2019-09-28 15:28:20
+ * @Last Modified time: 2022-02-28 16:43:23
  */
 
 
