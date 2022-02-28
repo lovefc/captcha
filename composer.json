@@ -2,7 +2,6 @@
     "name": "lovefc/captcha",
     "description": "php中文验证码",
     "keywords": ["php","captcha","验证码","中文验证码"],
-    "version": "0.0.2",
     "homepage": "https://github.com/lovefc/captcha.git",
     "license": "MIT",
     "require": {
