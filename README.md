@@ -21,7 +21,7 @@
 ````
 {
     "require": {
-        "lovefc/captcha": "0.0.2"
+        "lovefc/captcha": "0.0.3"
     }		
 }
 ````
