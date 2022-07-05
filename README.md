@@ -50,6 +50,9 @@ $ver->random = '舔狗不得好死';
 // 随机数大小
 $ver->font_size = 40;
 
+// 干扰线数量，为0时没有干扰线
+$ver->interfere_line = 50;
+
 // 字体路径
 //$ver->font_path = __DIR__.'/Font/zhankukuhei.ttf';
 

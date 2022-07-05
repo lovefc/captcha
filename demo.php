@@ -5,10 +5,12 @@
  * @Author: lovefc 
  * @Email：fcphp@qq.com
  * @Date: 2019-09-28 15:37:21
+ * @updateDate: 2022-07-05 16:46:31
  */
 
 
 /* 加载文件，如果使用composer的加载就不需要手动加载 */
+
 /** require __DIR__ . '/vendor/autoload.php'; **/
 require __DIR__ . '/Src/Captcha.php';
 require __DIR__ . '/Src/GIF/GIFEncoder.php';
@@ -32,6 +34,9 @@ $ver->random = '舔狗不得好死';
 
 // 随机数大小
 $ver->font_size = 40;
+
+// 干扰线数量，为0时没有干扰线
+$ver->interfere_line = 50;
 
 // 字体路径
 //$ver->font_path = __DIR__.'/Font/zhankukuhei.ttf';

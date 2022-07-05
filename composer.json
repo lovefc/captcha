@@ -2,6 +2,7 @@
     "name": "lovefc/captcha",
     "description": "php中文验证码",
     "keywords": ["php","captcha","验证码","中文验证码"],
+    "version": "0.0.4",	
     "homepage": "https://github.com/lovefc/captcha.git",
     "license": "MIT",
     "require": {
@@ -10,7 +11,7 @@
     "authors": [
       {
         "name": "lovefc",
-        "email": "1102952084@qq.com",
+        "email": "fcphp@qq.com",
         "role": "Developer"
       }
     ],

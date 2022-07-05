@@ -10,7 +10,7 @@ use FC\GIF\GIFEncoder;
  * @Email：fcphp@qq.com
  * @Date: 2019-09-27 14:35:05
  * @Last Modified by: lovefc
- * @Last Modified time: 2022-02-28 16:43:23
+ * @Last Modified time: 2022-07-05 16:46:31
  */
 
 
@@ -33,13 +33,16 @@ class Captcha
     public $font_size = 36;
 
     // 字体路径
-    public $font_path = __DIR__.'/Font/zhankukuhei.ttf';
+    public $font_path = __DIR__ . '/Font/zhankukuhei.ttf';
 
     // 是否为动态验证码
     public $is_gif = true;
 
     // 动图帧数
     public $gif_fps = 10;
+
+    // 干扰线数量，为0时没有干扰线
+    public $interfere_line = 0;
 
     /**
      * 获取验证码
@@ -74,7 +77,7 @@ class Captcha
         echo $gif->GetAnimation();
         exit();
     }
-	
+
     /**
      * 获取图片内容
      */
@@ -95,8 +98,28 @@ class Captcha
         }
         $gif = new GIFEncoder($imagedata);
         return $gif->GetAnimation();
-    }	
+    }
 
+    /**
+     * 创建干扰线
+     */
+    private function extLine($im)
+    {
+        for ($i = 0; $i < $this->interfere_line; $i++) {
+            $x1 = rand(1, $this->width - 1);
+            $y1 = rand(1, $this->height - 1);
+            $x2 = rand(1, $this->width - 1);
+            $y2 = rand(1, $this->height - 1);
+            imageline($im, $x1, $y1, $x2, $y2, $this->extColor($im));
+        }
+    }
+    /**
+     * 干扰线颜色
+     */
+    private function extColor($im)
+    {
+        return imagecolorallocate($im, rand(50, 180), rand(50, 180), rand(50, 180));
+    }
     /**
      * 创建动态背景
      *
@@ -107,6 +130,9 @@ class Captcha
         ob_start();
         $im = $this->createImageSource();
         $this->setBackGroundColor($im);
+        if ($this->interfere_line > 0) {
+            $this->extLine($im);
+        }
         $this->setCode($im, $code);
         $this->setRandomCode($im);
         imagegif($im);
